@@ -1,0 +1,27 @@
+# Pinchy orchestration config
+# Copy to .clawdbot/config.yaml and adjust paths before running the scripts
+repo_root: .
+base_branch: main
+remote: origin
+worktree_root: ../RaceDash-worktrees
+package_manager: pnpm
+install_command: pnpm install
+# Default agent templates. {prompt}, {model}, {effort} are substituted automatically.
+agent_commands:
+  codex: |
+    codex --model {model} -c "model_reasoning_effort={effort}" --dangerously-bypass-approvals-and-sandbox "{prompt}"
+  claude: |
+    claude --model {model} --dangerously-skip-permissions -p "{prompt}"
+# Default models / reasoning effort per agent type
+agent_defaults:
+  codex:
+    model: gpt-5.3-codex
+    effort: high
+  claude:
+    model: claude-opus-4.5
+    effort: medium
+# Optional notifications webhook
+notifications:
+  enabled: false
+  telegram_bot_token: ""
+  telegram_chat_id: ""
